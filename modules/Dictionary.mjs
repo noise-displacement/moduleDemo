@@ -1,28 +1,22 @@
-import no from "./lan/no.json" assert {type: 'json'};
-import en_uk from "./lan/en-uk.json" assert {type: 'json'};
-
-export const SUPPORTED_LANGUAGES = {
-    'no': {
-        title: 'NB',
-        content: no,
-    },
-    'en_uk': {
-        title: 'EN-US',
-        content: en_uk,
-    }
-};
-
 function Dictionary2() {
-    this.language = "NB";
-    this.dictionary = null;
+    let language = null;
+    let dictionary = null;
 
-    this.setLanguage = function(newLanguage) {
-        this.language = newLanguage.title;
-        this.dictionary = newLanguage.content;
+    // Had to change json files to js files with default export to support dynamically import them. Cant assert type json on dynamic import.
+    this.setLanguage = async function(newLanguage) {
+        await import(`./lan/${newLanguage}`).then(module => {
+            dictionary = module.default;
+            language = newLanguage.replace('.js', '');
+        });
     }
 
+    //Does not work as setLanguage is async or some bullshit
     this.getWord = function(key) {
-        return this.dictionary[key]
+        if(!dictionary) {
+            console.log("not done loading the fucking language file");
+        } else {
+            return this.dictionary[key]
+        }
     }
 }
 

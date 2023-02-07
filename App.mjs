@@ -1,8 +1,13 @@
-import Dictionary2, { SUPPORTED_LANGUAGES } from "./modules/Dictionary.mjs";
+import Dictionary2 from "./modules/Dictionary.mjs";
 
-let currentLanguage = new Dictionary2();
-currentLanguage.setLanguage(SUPPORTED_LANGUAGES.no);
-currentLanguage.getWord("end");
+const SUPPORTED_LANGUAGES = {
+    'NO_NB': "no-nb.js",
+    'EN_UK': "en-uk.js"
+}
+
+let dictionary = new Dictionary2();
+dictionary.setLanguage(SUPPORTED_LANGUAGES.EN_UK);
+dictionary.getWord("end");
 
 /*
 
